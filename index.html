@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MotoCare | PMS & Motorcycle Upgrade Appointments</title>
+  <meta name="description" content="Book motorcycle PMS and upgrade appointments with MotoCare.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="nav">
+    <a class="brand" href="#home">
+      <span class="brand-mark">MC</span>
+      <span>MotoCare</span>
+    </a>
+    <nav>
+      <a href="#services">Services</a>
+      <a href="#booking">Book</a>
+      <button id="loginNavBtn" class="nav-button">Login</button>
+      <button id="logoutBtn" class="nav-button hidden">Logout</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">MOTORCYCLE SERVICE CENTER</p>
+        <h1>Keep your ride <span>ready.</span></h1>
+        <p class="hero-text">Schedule preventive maintenance service (PMS) or a motorcycle upgrade without the long waiting time.</p>
+        <div class="hero-actions">
+          <a class="primary-btn" href="#booking">Book an appointment</a>
+          <a class="secondary-btn" href="#services">View services</a>
+        </div>
+        <div class="hours-card">
+          <strong>Shop hours</strong>
+          <span>Mon–Fri: 8:00 AM–5:00 PM</span>
+          <span>Saturday: 8:00 AM–9:00 PM</span>
+          <span>Sunday: Closed</span>
+        </div>
+      </div>
+      <div class="hero-art" aria-label="Motorcycle service illustration">
+        <div class="wheel wheel-a"></div>
+        <div class="wheel wheel-b"></div>
+        <div class="bike-body"></div>
+        <div class="bike-seat"></div>
+        <div class="bike-handle"></div>
+        <div class="bike-light"></div>
+        <div class="spark">✦</div>
+        <div class="spark spark-2">✦</div>
+      </div>
+    </section>
+
+    <section id="services" class="section">
+      <div class="section-heading">
+        <p class="eyebrow">WHAT WE DO</p>
+        <h2>Simple booking for essential motorcycle care.</h2>
+      </div>
+      <div class="service-grid">
+        <article class="service-card">
+          <div class="icon">🔧</div>
+          <h3>Preventive Maintenance</h3>
+          <p>Book a PMS schedule for routine inspection, oil service, checks, and basic maintenance.</p>
+          <button class="text-btn service-select" data-service="PMS">Choose PMS →</button>
+        </article>
+        <article class="service-card">
+          <div class="icon">⚙️</div>
+          <h3>Motorcycle Upgrade</h3>
+          <p>Reserve a slot for selected parts, accessories, performance upgrades, or installation work.</p>
+          <button class="text-btn service-select" data-service="Upgrade">Choose Upgrade →</button>
+        </article>
+      </div>
+    </section>
+
+    <section id="booking" class="section booking-section">
+      <div class="section-heading">
+        <p class="eyebrow">APPOINTMENT</p>
+        <h2>Choose your preferred schedule.</h2>
+        <p>Appointments are available Monday–Friday from 8:00 AM–5:00 PM and Saturday from 8:00 AM–9:00 PM. Sunday is unavailable.</p>
+      </div>
+
+      <div id="authNotice" class="notice">
+        <strong>Account required.</strong> Register or log in before submitting an appointment.
+      </div>
+
+      <form id="appointmentForm" class="form-card">
+        <div class="form-grid">
+          <label>
+            Motorcycle plate number
+            <input id="plateNumber" name="plateNumber" placeholder="e.g. ABC 1234" required>
+          </label>
+          <label>
+            Service
+            <select id="serviceType" name="serviceType" required>
+              <option value="">Select service</option>
+              <option value="PMS">Preventive Maintenance Service (PMS)</option>
+              <option value="Upgrade">Motorcycle Upgrade</option>
+            </select>
+          </label>
+          <label>
+            Preferred date
+            <input id="date" name="date" type="date" required>
+          </label>
+          <label>
+            Preferred time
+            <select id="time" name="time" required>
+              <option value="">Select a date first</option>
+            </select>
+          </label>
+          <label class="full">
+            Service notes (optional)
+            <textarea id="notes" name="notes" rows="3" placeholder="Example: change engine oil, install LED auxiliary lights..."></textarea>
+          </label>
+        </div>
+        <div class="slot-help" id="slotHelp">Select a date to see available hours.</div>
+        <button class="primary-btn wide" type="submit">Request appointment</button>
+        <p id="appointmentMessage" class="form-message"></p>
+      </form>
+    </section>
+
+    <section id="dashboard" class="section dashboard hidden">
+      <div class="section-heading">
+        <p class="eyebrow">MY ACCOUNT</p>
+        <h2>Appointment dashboard</h2>
+      </div>
+      <div class="account-bar">
+        <div>
+          <strong id="welcomeName">Customer</strong>
+          <span id="accountRole"></span>
+        </div>
+        <button class="secondary-btn" id="refreshBtn">Refresh</button>
+      </div>
+      <div id="appointmentsList" class="appointments-list"></div>
+
+      <div id="adminPanel" class="admin-panel hidden">
+        <div class="section-heading compact">
+          <p class="eyebrow">ADMIN</p>
+          <h3>Registered users</h3>
+        </div>
+        <div id="usersList" class="users-list"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <strong>MotoCare PMS & Upgrade Center</strong>
+    <span>Appointment system demo • Built for Business System Build</span>
+  </footer>
+
+  <div id="modal" class="modal hidden">
+    <div class="modal-backdrop"></div>
+    <div class="modal-card">
+      <button class="modal-close" id="closeModal">×</button>
+      <div id="authPanel">
+        <div class="auth-tabs">
+          <button class="active" data-tab="login">Login</button>
+          <button data-tab="register">Register</button>
+        </div>
+
+        <form id="loginForm" class="auth-form">
+          <h2>Welcome back</h2>
+          <p>Log in to manage your motorcycle appointments.</p>
+          <label>Email<input id="loginEmail" type="email" required></label>
+          <label>Password<input id="loginPassword" type="password" required></label>
+          <button class="primary-btn wide">Login</button>
+          <p id="loginMessage" class="form-message"></p>
+        </form>
+
+        <form id="registerForm" class="auth-form hidden">
+          <h2>Create your account</h2>
+          <p>Register once to book and manage your appointments.</p>
+          <div class="two-col">
+            <label>First name<input id="regFirstName" required></label>
+            <label>Surname<input id="regSurname" required></label>
+          </div>
+          <label>Contact number<input id="regPhone" placeholder="09XXXXXXXXX" required></label>
+          <label>Email<input id="regEmail" type="email" required></label>
+          <label>Password<input id="regPassword" type="password" minlength="6" required></label>
+          <button class="primary-btn wide">Register</button>
+          <p id="registerMessage" class="form-message"></p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="editModal" class="modal hidden">
+    <div class="modal-backdrop"></div>
+    <div class="modal-card">
+      <button class="modal-close" id="closeEditModal">×</button>
+      <h2>Edit appointment</h2>
+      <form id="editForm" class="auth-form">
+        <input id="editId" type="hidden">
+        <label>Plate number<input id="editPlate" required></label>
+        <label>Service
+          <select id="editService" required>
+            <option value="PMS">PMS</option>
+            <option value="Upgrade">Upgrade</option>
+          </select>
+        </label>
+        <label>Date<input id="editDate" type="date" required></label>
+        <label>Time<select id="editTime" required></select></label>
+        <label>Notes<textarea id="editNotes" rows="3"></textarea></label>
+        <label id="editStatusWrap" class="hidden">Status
+          <select id="editStatus">
+            <option>Pending</option>
+            <option>Confirmed</option>
+            <option>Completed</option>
+            <option>Cancelled</option>
+          </select>
+        </label>
+        <button class="primary-btn wide">Save changes</button>
+        <p id="editMessage" class="form-message"></p>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
